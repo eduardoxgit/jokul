@@ -46,10 +46,9 @@ export function createReducer(
 
                 if (newDate && dateHasChanged(state.date, newDate)) {
                     return { ...state, date: newDate, dateString: action.payload };
-                } else if (action.payload === "") {
+                } else {
                     return { ...state, date: undefined, dateString: action.payload };
                 }
-                return { ...state, dateString: action.payload };
 
             case "TOGGLE":
                 if (state.calendarHidden && state.date) {
