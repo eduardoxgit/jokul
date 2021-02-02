@@ -19,11 +19,17 @@ interface ValuePropChangedAction {
     payload: Date | undefined;
 }
 
+interface ValidateOnblur {
+    type: "VALIDATE_ONBLUR";
+    payload: any;
+}
+
 export type Action =
     | InputChangeAction
     | ToggleCalendarVisibilityAction
     | SelectDateInCalendarAction
-    | ValuePropChangedAction;
+    | ValuePropChangedAction
+    | ValidateOnblur;
 
 export interface State {
     date?: Date;
@@ -49,6 +55,10 @@ export function createReducer(
                 } else {
                     return { ...state, date: undefined, dateString: action.payload };
                 }
+
+            case "VALIDATE_ONBLUR":
+                const inputDate = parseDateString(action.payload);
+                return { ...state, date: inputDate, dateString: action.payload };
 
             case "TOGGLE":
                 if (state.calendarHidden && state.date) {

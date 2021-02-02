@@ -157,7 +157,10 @@ export function DatePicker({
                     data-testid="jkl-datepicker__input"
                     value={state.dateString}
                     onFocus={handleFocusChange(onFocus)}
-                    onBlur={handleFocusChange(onBlur)}
+                    onBlur={(e) => {
+                        dispatch({ type: "VALIDATE_ONBLUR", payload: e.target.value });
+                        handleFocusChange(onBlur)(e);
+                    }}
                     onClick={() => dispatch({ type: "TOGGLE" })}
                     onChange={(e) => {
                         dispatch({ type: "INPUT_CHANGE", payload: e.target.value });
