@@ -407,6 +407,25 @@ describe("Datepicker", () => {
     });
 });
 
+describe("should call onBlur when input value is a string", () => {
+    const onBlur = jest.fn();
+    render(
+        <div>
+            <DatePicker onBlur={onBlur} />
+            <button>Click</button>
+        </div>,
+    );
+
+    const inputElement = screen.getByLabelText("Velg dato");
+    await act(async () => {
+        userEvent.click(inputElement);
+    });
+    await userEvent.type(inputElement, "1.januar");
+    await userEvent.click(screen.getByText("Click")); // Click button outside component
+
+    expect(onBlur).toHaveBeenCalledTimes(1);
+});
+
 describe("a11y", () => {
     it("default datepicker should be a11y compliant", async () => {
         const { container } = render(<DatePicker initialShow />);
