@@ -417,12 +417,12 @@ describe("should call onBlur when input value is a string", () => {
     );
 
     const inputElement = screen.getByLabelText("Velg dato");
-    await act(async () => {
-        userEvent.click(inputElement);
-    });
-    await userEvent.type(inputElement, "1.januar");
-    await userEvent.click(screen.getByText("Click")); // Click button outside component
 
+    act(() => {
+        userEvent.click(inputElement);
+        userEvent.type(inputElement, "1.januar");
+        userEvent.click(screen.getByText("Click")); // Click button outside component
+    });
     expect(onBlur).toHaveBeenCalledTimes(1);
 });
 
